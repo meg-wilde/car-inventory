@@ -6,16 +6,15 @@ const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 const uri =
-  "mongodb+srv://megcwilde:zvAL6FgrfYuVHWAg@cluster0.luoxfy5.mongodb.net/?retryWrites=true&w=majority";
-mongoose.Promise = global.Promise;
-
+  "mongodb+srv://megcwilde:zvAL6FgrfYuVHWAg@cluster0.luoxfy5.mongodb.net/Cluster0?retryWrites=true&w=majority";
 mongoose.connect(uri, {
-  useMongoClient: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
   dbName: "Cluster0",
 });
 
-mongoose.connection.on("error", function () {
-  console.log("Could not connect to the database. Exiting now..");
+mongoose.connection.on("error", function (error) {
+  console.log("Could not connect to the database. Exiting now..", error);
   process.exit();
 });
 
