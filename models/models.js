@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//create schema for cars structure
 const carSchema = mongoose.Schema({
   make: {
     type: String,
@@ -23,7 +24,7 @@ const carSchema = mongoose.Schema({
   },
   colour: {
     type: String,
-    required: false,
+    required: false, //colour not required
   },
 });
 
