@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const carController = require("./controllers/car.controller.js");
+const carRoutes = require("./routes/carRoutes.js");
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 const uri =
@@ -27,21 +27,15 @@ mongoose.connection.once("open", function () {
 app.use(express.json());
 
 // Routes
-app.post("/api/cars", carController.createCar);
-app.get("/api/cars", carController.findAllCars);
-app.put("/api/cars/:id", carController.updateCarById);
-app.put("/api/cars", carController.updateCarsByMake);
-app.delete("/api/cars/:id", carController.deleteCarById);
-app.delete("/api/cars", carController.deleteCarsByMake);
-app.get("/api/older-cars", carController.listOlderCars);
+app.use("/api", carRoutes);
 
-// Serve the React app
-app.use(express.static("client/build"));
-
-// Serve React app for any other route
+// Serve the React app for any other route
 app.get("*", (req, res) => {
   res.sendFile("client/build/index.html", { root: __dirname });
 });
+
+// Serve static files from the client/build directory
+app.use(express.static("client/build"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
